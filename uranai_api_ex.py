@@ -17,21 +17,19 @@ y = today.year
 m = today.month
 d = today.day
 
-#requestsとjsonつかってAPI取得（関数の中でも外でもどっでもいいです）
+#requestsとjson使用してAPI取得
 url = f"http://api.jugemkey.jp/api/horoscope/free/{y}/{m}/{d}"
 result = requests.get(url)
 data = json.loads(result.text)
 
-#取ってきたAPIをきれいに成形（関数の中でも外でも）
+#取ってきたAPIを整える
 k_name = list(data["horoscope"].keys())[0]
 kekka = data["horoscope"][k_name]
-# この先は星座が確定しないとできないので関数の中
+
 
 #自作関数
 def sarch():
     seiza = select.get()
-    #APIつないで占い結果取ってこよう
-    #ひとまずprint文で出力
     match seiza:
         case "おひつじ座":
             unsei = kekka[0]
@@ -60,7 +58,6 @@ def sarch():
         case _:
             unsei = {}
     textbox.delete(0.0,tk.END)
-    #作文「●●座の今日の運勢は」と表示
     out_str = f"{seiza}の今日の運勢は……\n{unsei['content']}\n\n【ラッキーカラー】{unsei['color']}\n【ラッキーアイテム】{unsei['item']}"
     
     textbox.insert(tk.END,out_str)
